@@ -2,9 +2,7 @@ import { StyleSheet, Text, Image } from 'react-native'
 import React from 'react'
 import Card from './Card'
 
-const ProductItem = ({item}) => {
-
-  
+const ProductItem = ({item}) => { 
 
   return (
     <Card

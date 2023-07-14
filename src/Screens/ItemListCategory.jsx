@@ -1,37 +1,31 @@
-import { StyleSheet, FlatList, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import productsRaw from '../Data/products.json'
 import ProductItem from '../Components/ProductItem'
-
+import { colors } from '../Global/Colors'
 import Search from '../Components/Search'
 
-const ItemListCategory = () => {
+const ItemListCategory = ({
+  category,
+  setCategory
+}) => {
 
-  // Variables de estado
-  const [categorySelected, setCategorySelected] = useState("smartphones")
+  const [categorySelected, setCategorySelected] = useState(category)
   const [products, setProducts] = useState([])
   const [keyword, setKeyword] = useState("")
   const [keywordError, setKeywordError] = useState("")
 
-  // hook useEffect  -  se ejecutará cada vez que haya un cambio en las dependencias keyword
   useEffect(()=> {
-       // Obtener array productsFiltered. 
-       // ProductsRaw es un arreglo de productos sin filtrar y despues funcion flecha que
-       // Filtra los productos por categoria cuando sea seleccionada la cagoria 
-       // Verifica si el título del producto incluye el texto de búsqueda.   
+    //Lógica de manejo de category
     const productsFiltered = productsRaw.filter(product => product.category === categorySelected && product.title.toLocaleLowerCase().includes(keyword.toLowerCase()))
-    setProducts(productsFiltered) //actualizar el estado de la variable products en el componente y volverá a renderizarse con la nueva lista de productos filtrados
+    setProducts(productsFiltered)
 
-    //lo anterior esta de useEffect
-  }, [categorySelected, keyword]) //se ejecutará nuevamente cuando haya cambios en las variables categorySelected o keyword
+  }, [categorySelected, keyword])
 
-    // Función para la búsqueda de productos
   const onSearch = (input) => {
-    setKeyword(input)
-    const expression = /^[a-zA-Z0-9\ ]*$/    //hacer Validacion
+    const expression = /^[a-zA-Z0-9\ ]*$/
     const evaluation = expression.test(input)
-    
-    //cuando solamente le ponga letras o numeros 
+
     if (evaluation) {
       setKeyword(input)
       setKeywordError("")
@@ -42,14 +36,14 @@ const ItemListCategory = () => {
 
   }  
 
-  // Renderizado del componente
   return (
     <View style={styles.container}>
-      <Search
-        onSearch={onSearch}
-        error={keywordError}
-      />
-    <FlatList
+        <Search
+          onSearch={onSearch}
+          error={keywordError}
+          goBack={()=> setCategory("")}
+        />
+        <FlatList
             data = {products}
             keyExtractor={product => product.id}
             renderItem={({item}) => ProductItem({item})}
@@ -62,8 +56,9 @@ const ItemListCategory = () => {
 export default ItemListCategory
 
 const styles = StyleSheet.create({
-  container:{
-    height:"90%",
-    alignItems: 'center',
-  }
+    container: {
+        height: '90%',
+        backgroundColor: colors.lightPink,
+        alignItems: 'center'
+    }
 })

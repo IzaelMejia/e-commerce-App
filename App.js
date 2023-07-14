@@ -2,9 +2,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import Header from './src/Components/Header';
 import ItemListCategory from './src/Screens/ItemListCategory';
 import { useFonts } from 'expo-font';
+import Home from "./src/Screens/Home"
+import { useState } from 'react';
 
 
 export default function App() {
+
+  const [categorySelected, setCategorySelected] = useState("")
+
   // Hook de fuente de letra
   const [fontsLoaded] = useFonts({
     'Fira': require('./src/assets/fonts/FiraSansCondensed-Medium.ttf'),
@@ -18,8 +23,20 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      
       <Header></Header>
-      <ItemListCategory/> 
+
+      {     //si se selecciona una categoria que nos mande a los productos de esa categoria 
+        categorySelected ? 
+        <ItemListCategory
+          category={categorySelected}  //enviamos categoria que etsa seleccionada
+          setCategory={setCategorySelected}
+        />:
+        <Home
+          setCategorySelected={setCategorySelected} //pasar funcion para que pase la categoria
+        />
+      }
+      {/* <ItemListCategory/>  */}
 
     </View>
   );

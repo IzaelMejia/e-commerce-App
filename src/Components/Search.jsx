@@ -3,11 +3,14 @@ import React, { useState } from 'react'
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { colors } from '../Global/Colors';
+import { AntDesign } from '@expo/vector-icons'; 
+
 
 //Función search
 const Search = ({
     onSearch,  //prop de desestruct
     error="",
+    goBack
 }) => {
     // hook "useState"
     const [keyword, setKeyword] = useState("")  //almacenar el valor del texto de búsqueda ingresado 
@@ -27,6 +30,10 @@ const Search = ({
                 <Pressable onPress={() => setKeyword("")}>       {/* Limpiar pasando "" */}
                     <FontAwesome5 name="eraser" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
                 </Pressable>
+                <Pressable onPress={goBack}>
+                    <AntDesign name="back" size={24} color="black" />
+                </Pressable>
+                
             </View>
 
             <View style={styles.errorContainer}>
