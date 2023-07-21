@@ -1,46 +1,80 @@
-import { StyleSheet, Text, Image } from 'react-native'
-import React from 'react'
-import Card from './Card'
+import { StyleSheet, Text, Image, useWindowDimensions, Pressable } from 'react-native';
+import React from 'react';
+import Card from './Card';
+import { View } from 'react-native-web';
 
-const ProductItem = ({item}) => { 
+//Productos de la categoria seleccionada
+const ProductItem = ({ 
+  item,
+  setProductSelected,
+  setCategorySelected
 
-  return (
-    <Card
-      //estilos definidos abajo , se los pasamos 
-      additionalStyle={styles.additionalStyleCard}
+}) => {
+  const { height, width } = useWindowDimensions();
+  console.log(height, width);
 
-    >
-        <Text style={styles.textCategory}>{item.title}</Text> {/* Titulo del producto*/}
-        <Image
-            resizeMode="cover"   /* Propiedades de la img*/
-            style={styles.image} 
-            source={{uri: item.images[0]}}
-        />
-    </Card>
-  )
-}
-
-export default ProductItem
-
-const styles = StyleSheet.create({
-
-// Tmaño de la imagenes
-  image:{
-    height:100,
-    width: 100,
-    borderRadius: 8 ,
-    marginRight:5
-  },
-  additionalStyleCard:{
-    flexDirection:"row",
-    height:150,
-    justifyContent:"space-between",
-    
-  },
-  textCategory:{
-    fontSize:18,
-    fontFamily:"Fira"
+  const onSelect= (id)=>{  //producto seleccionado 
+    setProductSelected(id)
+    setCategorySelected("")
   }
 
+  return (                                
+                                //seteamos el id del producto "item.id"
+    <Pressable onPress={()=> setProductSelected(item.id)}>
+      <View style={styles.container}>
+        <Card additionalStyle={width > 350 ? styles.additionalStyleCard:styles.additionalStyleCardSm}>
+          <Text style={width > 350 ? styles.textCategory : styles.textCategorySm}>
+            {item.title}
+          </Text>
+          {/* Titulo del producto */}
+          <Image
+            resizeMode="cover"
+            style={styles.image}
+            source={{ uri: item.images[0] }}
+          />
+        </Card>
+      </View>
+    </Pressable>
+  );
+};
 
-})
+export default ProductItem;
+
+const styles = StyleSheet.create({
+  // Tamaño de las imágenes
+  image: {
+    height: 100,
+    minWidth: 100,
+    width: '40%',
+    maxWidth: 250,
+    borderRadius: 8,
+    marginRight: 5,
+  },
+  container: {
+    flex: 1, // Ocupar todo el espacio disponible
+    justifyContent: 'center', // Centrar verticalmente
+    alignItems: 'center', // Centrar horizontalmente
+  },
+  additionalStyleCard: {
+    width: '90%',
+    flexDirection: 'row',
+    height: 150,
+    alignItems: 'center',
+  },
+  additionalStyleCardSm: {
+    width: '80%',
+    flexDirection: 'row',
+    height: 150,
+    alignItems: 'center',
+  },
+  textCategory: {
+    width: '50%',
+    fontSize: 20,
+    fontFamily: 'Fira',
+  },
+  textCategorySm: {
+    width: '50%',
+    fontSize: 16,
+    fontFamily: 'Fira',
+  },
+});

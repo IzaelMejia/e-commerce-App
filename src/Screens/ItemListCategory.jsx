@@ -5,9 +5,11 @@ import ProductItem from '../Components/ProductItem'
 import { colors } from '../Global/Colors'
 import Search from '../Components/Search'
 
+//renderiza productos por categoria 
 const ItemListCategory = ({
   category,
-  setCategory
+  setCategory,
+  setProductSelected//Producto seleccionado o seteado
 }) => {
 
   const [categorySelected, setCategorySelected] = useState(category)
@@ -46,7 +48,12 @@ const ItemListCategory = ({
         <FlatList
             data = {products}
             keyExtractor={product => product.id}
-            renderItem={({item}) => ProductItem({item})}
+            //no se puede ejecutar hook en  una funcion tiene por eso se paso en forma de componente
+            renderItem={({item}) => 
+                <ProductItem 
+                  item={item}   //se envia el item(producto)
+                  setProductSelected={setProductSelected}  //se envia producto seleccionado
+                  />}
             showsVerticalScrollIndicator={false}
         />
     </View>
@@ -57,7 +64,6 @@ export default ItemListCategory
 
 const styles = StyleSheet.create({
     container: {
-        height: '90%',
         backgroundColor: colors.lightPink,
         alignItems: 'center'
     }

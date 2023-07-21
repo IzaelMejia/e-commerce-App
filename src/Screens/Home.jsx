@@ -5,7 +5,6 @@ import CategoryItem from '../Components/CategoryItem';
 
 
 // Aquí mostramos las categorias 
-
 const Home = ({
     //para que pueda navegar se usa 
     setCategorySelected
@@ -17,7 +16,7 @@ const Home = ({
             data={categories}
             keyExtractor={category => category} 
                                    //esta es la calse CategoryItem y aquí llega lo que se le paso de CategoryItem.jsx
-            renderItem={({item}) =>CategoryItem({item,setCategorySelected})} //ademas de item , seleciona categoria 
+            renderItem={({item}) =><CategoryItem item={item} setCategorySelected={setCategorySelected}/>} //ademas de item , seleciona categoria 
             showsVerticalScrollIndicator={false}       //quitar el scroll
         >  
        </FlatList>
@@ -32,14 +31,10 @@ const styles = StyleSheet.create({
         height:"90%",
         alignItems:"center",
         marginTop:8
-
-
     },
     contenedorLista:{
         marginTop:10,
         width:100,
         height:40,
-
     }
-
 })

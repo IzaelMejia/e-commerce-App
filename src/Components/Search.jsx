@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -12,27 +12,31 @@ const Search = ({
     error="",
     goBack
 }) => {
-    // hook "useState"
+    // hook "useState" 
     const [keyword, setKeyword] = useState("")  //almacenar el valor del texto de búsqueda ingresado 
+    const {height,width}=useWindowDimensions            ()
+    console.log(width,height);
 
     return (
-        <View style={styles.container}>
-            <View style={styles.searchContainer}>
+        <View style={  styles.container}>
+            <View style={width>350? styles.searchContainer: styles.searchContainerSm}>
                 <TextInput
                     style={styles.input}
                     placeholder='Buscar...'
                     value={keyword}            //valor del TextInput 
                     onChangeText={setKeyword} //Controlador de eventos que se ejecuta cuando el usuario ingresa o modifica el texto
                 />
-                <Pressable onPress={() => onSearch(keyword)}>     {/* Cuando presiona llama la keyword*/}
-                    <FontAwesome name="search" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
-                </Pressable>
-                <Pressable onPress={() => setKeyword("")}>       {/* Limpiar pasando "" */}
-                    <FontAwesome5 name="eraser" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
-                </Pressable>
-                <Pressable onPress={goBack}>
-                    <AntDesign name="back" size={24} color="black" />
-                </Pressable>
+                <View style={styles.iconos}>
+                    <Pressable onPress={() => onSearch(keyword)}>     {/* Cuando presiona llama la keyword*/}
+                        <FontAwesome name="search" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
+                    </Pressable>
+                    <Pressable onPress={() => setKeyword("")}>       {/* Limpiar pasando "" */}
+                        <FontAwesome5 name="eraser" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
+                    </Pressable>
+                    <Pressable onPress={goBack}>
+                        <AntDesign name="back" size={24} color="black" />
+                    </Pressable>
+                </View>
                 
             </View>
 
@@ -56,6 +60,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 18,
     },
+    searchContainerSm: {
+        flexDirection: 'colum',
+        alignItems: 'center',
+        gap: 18,
+    },
+    iconos:{
+        flexDirection:"row",
+        gap: 18,
+    },
+
     input: {
         flex: 1,
         padding: 8,
