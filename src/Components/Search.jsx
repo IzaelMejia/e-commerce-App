@@ -14,8 +14,14 @@ const Search = ({
 }) => {
     // hook "useState" 
     const [keyword, setKeyword] = useState("")  //almacenar el valor del texto de búsqueda ingresado 
-    const {height,width}=useWindowDimensions            ()
+    const {height,width}=useWindowDimensions()
     console.log(width,height);
+
+    // Fucion para que cuando se borre regrese todos los productos
+    const onErrase = ()=>{
+        setKeyword("")
+        onSearch("") //si se hace un onSearch vacio devuelve todo 
+    }
 
     return (
         <View style={  styles.container}>
@@ -27,15 +33,16 @@ const Search = ({
                     onChangeText={setKeyword} //Controlador de eventos que se ejecuta cuando el usuario ingresa o modifica el texto
                 />
                 <View style={styles.iconos}>
+
                     <Pressable onPress={() => onSearch(keyword)}>     {/* Cuando presiona llama la keyword*/}
                         <FontAwesome name="search" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
                     </Pressable>
-                    <Pressable onPress={() => setKeyword("")}>       {/* Limpiar pasando "" */}
+
+                    <Pressable onPress={onErrase}>       {/* Se llama así pórque no tiene parametros  */}
                         <FontAwesome5 name="eraser" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
                     </Pressable>
-                    <Pressable onPress={goBack}>
-                        <AntDesign name="back" size={24} color="black" />
-                    </Pressable>
+
+                    
                 </View>
                 
             </View>
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 10,
     },
     searchContainer: {
         flexDirection: 'row',
@@ -74,7 +81,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 8,
         fontSize: 18,
-        backgroundColor: colors.pink,
+        backgroundColor: colors.salom,
         borderRadius: 10,
     },
     textoError: {

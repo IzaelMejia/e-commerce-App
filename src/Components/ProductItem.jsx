@@ -6,21 +6,22 @@ import { View } from 'react-native-web';
 //Productos de la categoria seleccionada
 const ProductItem = ({ 
   item,
-  setProductSelected,
-  setCategorySelected
-
+  navigation
 }) => {
+    // Obtiene las dimensiones de la ventana (ancho y alto) del dispositivo
   const { height, width } = useWindowDimensions();
   console.log(height, width);
 
+    // Función que se ejecuta cuando se selecciona un producto
   const onSelect= (id)=>{  //producto seleccionado 
-    setProductSelected(id)
-    setCategorySelected("")
+    //cuando se selecciona se navega al detalle del producto , agregamos nombre que se puso en Navigor.jsx 
+    //y al item que queremos navegar . "productId" se ennvia a ItemDetail.jsx
+    navigation.navigate("Detail",{productId: item.id , title: item.title})
   }
-
-  return (                                
+  return (         
+        // Componente 'Pressable' que envuelve el contenido para hacerlo clickeable                       
                                 //seteamos el id del producto "item.id"
-    <Pressable onPress={()=> setProductSelected(item.id)}>
+    <Pressable onPress={()=> onSelect(item.id)}>
       <View style={styles.container}>
         <Card additionalStyle={width > 350 ? styles.additionalStyleCard:styles.additionalStyleCardSm}>
           <Text style={width > 350 ? styles.textCategory : styles.textCategorySm}>
@@ -56,13 +57,13 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Centrar horizontalmente
   },
   additionalStyleCard: {
-    width: '90%',
+    width: 300,
     flexDirection: 'row',
     height: 150,
     alignItems: 'center',
   },
   additionalStyleCardSm: {
-    width: '80%',
+    width: 250,
     flexDirection: 'row',
     height: 150,
     alignItems: 'center',

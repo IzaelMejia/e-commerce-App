@@ -1,24 +1,26 @@
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, StyleSheet, Text, View,useWindowDimensions } from 'react-native'
 import React from 'react'
 import Card from './Card'
 
+
+////De home a ItemListCategory
 const CategoryItem = ({
   item,
-  setCategorySelected
+  navigation
 }) => { 
- 
+  const {width} = useWindowDimensions()
   
   return (
-    //Agarramos items y mostramos o retnoranos el nombre de la categoria
-                    //meter componente text dentro de la card que  se creo en Card.jsx
-    <Pressable
-      onPress={()=>setCategorySelected(item)}  
-    >
-      
-      <Card>
-        <Text style={styles.textCategory}>{item}</Text>
-      </Card>
-    </Pressable>
+    <View style = {{width: width, alignItems: 'center'}}> {/* poder deslizar la patalla */}
+      <Pressable    
+        //navegar a patalla correspondientes, agregamso el nombre que se definio en Navigator.jsx
+        onPress={()=>navigation.navigate("ItemListCategory", {category: item})}   //aparte de que navege indicar a que categoria va a navegar
+      >
+        <Card>  {/*    //meter componente text dentro de la card que  se creo en Card.jsx*/}
+          <Text style={styles.textCategory}>{item}</Text>
+        </Card>
+      </Pressable>
+      </View>
   )
 }
 

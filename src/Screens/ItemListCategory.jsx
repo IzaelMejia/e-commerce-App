@@ -2,27 +2,29 @@ import { FlatList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import productsRaw from '../Data/products.json'
 import ProductItem from '../Components/ProductItem'
-import { colors } from '../Global/Colors'
 import Search from '../Components/Search'
+
+
+//Aquí se muestran los productos de la categorya que se selecciono anterior mente 
 
 //renderiza productos por categoria 
 const ItemListCategory = ({
-  category,
-  setCategory,
-  setProductSelected//Producto seleccionado o seteado
+  navigation,
+  route  //atraves de este route vamos a recibir la categoria  que se selecciona
 }) => {
+                      //parametros
+  const {category} = route.params
 
-  const [categorySelected, setCategorySelected] = useState(category)
   const [products, setProducts] = useState([])
   const [keyword, setKeyword] = useState("")
   const [keywordError, setKeywordError] = useState("")
 
   useEffect(()=> {
     //Lógica de manejo de category
-    const productsFiltered = productsRaw.filter(product => product.category === categorySelected && product.title.toLocaleLowerCase().includes(keyword.toLowerCase()))
+    const productsFiltered = productsRaw.filter(product => product.category === category && product.title.toLocaleLowerCase().includes(keyword.toLowerCase()))
     setProducts(productsFiltered)
 
-  }, [categorySelected, keyword])
+  }, [category, keyword])
 
   const onSearch = (input) => {
     const expression = /^[a-zA-Z0-9\ ]*$/
@@ -43,7 +45,7 @@ const ItemListCategory = ({
         <Search
           onSearch={onSearch}
           error={keywordError}
-          goBack={()=> setCategory("")}
+          goBack={()=> navigation.goBack()}
         />
         <FlatList
             data = {products}
@@ -52,9 +54,9 @@ const ItemListCategory = ({
             renderItem={({item}) => 
                 <ProductItem 
                   item={item}   //se envia el item(producto)
-                  setProductSelected={setProductSelected}  //se envia producto seleccionado
+                  navigation={navigation}
                   />}
-            showsVerticalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
         />
     </View>
   )
@@ -64,7 +66,8 @@ export default ItemListCategory
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.lightPink,
+      height: '100%',
+        backgroundColor: "#fff",
         alignItems: 'center'
     }
 })

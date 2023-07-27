@@ -1,13 +1,12 @@
-import { StyleSheet, Text, View,FlatList } from 'react-native'
+import { StyleSheet,  View,FlatList } from 'react-native'
 import React from 'react'
 import categories from "../Data/categories.json"
 import CategoryItem from '../Components/CategoryItem';
 
 
-// Aquí mostramos las categorias 
+// Aquí mostramos las categorias en un FlatLists
 const Home = ({
-    //para que pueda navegar se usa 
-    setCategorySelected
+    navigation //propiedad para navegar entra pantallas, es como un chilldren
 
 }) => {
   return (
@@ -16,8 +15,9 @@ const Home = ({
             data={categories}
             keyExtractor={category => category} 
                                    //esta es la calse CategoryItem y aquí llega lo que se le paso de CategoryItem.jsx
-            renderItem={({item}) =><CategoryItem item={item} setCategorySelected={setCategorySelected}/>} //ademas de item , seleciona categoria 
+            renderItem={({item}) =><CategoryItem item={item} navigation={navigation}/>} //ademas de item , selecciona el chilldren
             showsVerticalScrollIndicator={false}       //quitar el scroll
+            
         >  
        </FlatList>
     </View>
@@ -27,14 +27,9 @@ const Home = ({
 export default Home
 
 const styles = StyleSheet.create({
-    container:{
-        height:"90%",
+    container:{ 
         alignItems:"center",
-        marginTop:8
+        backgroundColor:"#fff",
     },
-    contenedorLista:{
-        marginTop:10,
-        width:100,
-        height:40,
-    }
+     
 })
