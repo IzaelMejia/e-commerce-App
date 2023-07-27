@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import productsRaw from '../Data/products.json'
 import ProductItem from '../Components/ProductItem'
 import Search from '../Components/Search'
+import { useSelector } from 'react-redux'
 
 
 //Aquí se muestran los productos de la categorya que se selecciono anterior mente 
@@ -15,16 +16,18 @@ const ItemListCategory = ({
                       //parametros
   const {category} = route.params
 
+  const productsSelected= useSelector(state =>state.shopReducer.value.productsSelected)
+
   const [products, setProducts] = useState([])
   const [keyword, setKeyword] = useState("")
   const [keywordError, setKeywordError] = useState("")
 
   useEffect(()=> {
     //Lógica de manejo de category
-    const productsFiltered = productsRaw.filter(product => product.category === category && product.title.toLocaleLowerCase().includes(keyword.toLowerCase()))
+    const productsFiltered = productsSelected.filter(product => product.title.toLocaleLowerCase().includes(keyword.toLowerCase()))
     setProducts(productsFiltered)
 
-  }, [category, keyword])
+  }, [productsSelected, keyword])
 
   const onSearch = (input) => {
     const expression = /^[a-zA-Z0-9\ ]*$/

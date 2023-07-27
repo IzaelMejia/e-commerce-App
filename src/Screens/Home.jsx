@@ -2,6 +2,7 @@ import { StyleSheet,  View,FlatList } from 'react-native'
 import React from 'react'
 import categories from "../Data/categories.json"
 import CategoryItem from '../Components/CategoryItem';
+import Counter from '../Components/Counter';
 
 
 // Aquí mostramos las categorias en un FlatLists
@@ -11,6 +12,7 @@ const Home = ({
 }) => {
   return (
     <View style={styles.container}>
+        <Counter/>
         <FlatList
             data={categories}
             keyExtractor={category => category} 
