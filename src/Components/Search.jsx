@@ -34,12 +34,12 @@ const Search = ({
                 />
                 <View style={styles.iconos}>
 
-                    <Pressable onPress={() => onSearch(keyword)}>     {/* Cuando presiona llama la keyword*/}
-                        <FontAwesome name="search" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
+                    <Pressable onPress={() => onSearch(keyword)}>    
+                        <FontAwesome name="search" size={24} color="black" />
                     </Pressable>
 
-                    <Pressable onPress={onErrase}>       {/* Se llama así pórque no tiene parametros  */}
-                        <FontAwesome5 name="eraser" size={24} color="black" /> {/* icono biblioteca de FontAwesome*/}
+                    <Pressable onPress={onErrase}>       
+                        <FontAwesome5 name="eraser" size={24} color="black" /> 
                     </Pressable>
 
                     

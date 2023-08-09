@@ -1,8 +1,8 @@
 import { StyleSheet,  View,FlatList } from 'react-native'
 import React from 'react'
-import categories from "../Data/categories.json"
 import CategoryItem from '../Components/CategoryItem';
 import Counter from '../Components/Counter';
+import { useGetCategoriesQuery } from '../Services/shopServices';
 
 
 // Aquí mostramos las categorias en un FlatLists
@@ -10,6 +10,13 @@ const Home = ({
     navigation //propiedad para navegar entra pantallas, es como un chilldren
 
 }) => {
+    // llamamos hook "useGetCategoriesQuery" y hacemos llamado a la url paraa mostrar los de category
+    const {data:categories, isLoading, isError}= useGetCategoriesQuery() //isLoading: Indica si esta cargado el llamado 
+
+    
+    console.log(isLoading);
+    console.log(isError);
+    console.log(categories);
   return (
     <View style={styles.container}>
         <Counter/>

@@ -6,9 +6,11 @@ import {colors} from "../Global/Colors"
 
 //pasamos por props la vista de las categorias
 //prop adicional , parametro por defecto si no vine nada pone array vacio
+
+//mediante prop enviamos el estilo adicional
 const Card = ({children, additionalStyle =[]}) => {
   return (
-                  //mediante prop enviamos el estilo adicional
+                  
     <View style={[styles.contendedorCards, additionalStyle]}> 
       {children}
     </View>

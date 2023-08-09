@@ -1,30 +1,39 @@
+// Importa la función createSlice desde la biblioteca @reduxjs/toolkit
 import { createSlice } from "@reduxjs/toolkit";
-import Products from '../../Data/products.json'
 
+// Importa la lista de productos desde el archivo products.json
+import Products from '../../Data/products.json';
+
+// Define el slice "Shop" con su estado inicial y las acciones (reducers) que puede manejar
 export const shopSlice = createSlice({
-    name: "Shop",
-    initialState: {
+    name: "Shop", // Nombre del slice (puede ser utilizado como prefijo para las acciones)
+    initialState: { // Estado inicial del slice
         value: {
-            categorySelected: "",
-            idSelected: "",
-            allProducts: Products,
-            productsSelected: []
+            categorySelected: "", // Categoría seleccionada (inicializada en vacío)
+            idSelected: "", // ID del producto seleccionado (inicializado en vacío)
+            allProducts: Products, // Lista de todos los productos obtenidos desde products.json
+            productsSelected: [] // Lista de productos filtrados por categoría (inicialmente vacía)
         }
     },
     reducers: {
-        //categoria seleccionada
+        // Reducer para establecer la categoría seleccionada
         setCategorySelected: (state, action) => {
-            
-            state.value.productsSelected = state.value.allProducts.filter(product => product.category === action.payload)
-            state.value.categorySelected = action.payload
+            // Filtrar los productos según la categoría seleccionada y guardarlos en productsSelected
+            state.value.productsSelected = state.value.allProducts.filter(product => product.category === action.payload);
+
+            // Actualizar la categoría seleccionada en el estado
+            state.value.categorySelected = action.payload;
         },
-        //producto seleccionado  
-        setIdSelected: (state,action) => {
-            state.value.idSelected = action.payload
+        // Reducer para establecer el producto seleccionado por su ID
+        setIdSelected: (state, action) => {
+            // Actualizar el ID del producto seleccionado en el estado
+            state.value.idSelected = action.payload;
         }
     }
-})
-// exportamos accioes
-export const {setCategorySelected, setIdSelected} = shopSlice.actions
+});
 
-export default shopSlice.reducer
+// Exporta las acciones creadas por el slice (setCategorySelected, setIdSelected)
+export const { setCategorySelected, setIdSelected } = shopSlice.actions;
+
+// Exporta el reducer generado por el slice
+export default shopSlice.reducer;

@@ -4,6 +4,7 @@ import productsRaw from '../Data/products.json'
 import ProductItem from '../Components/ProductItem'
 import Search from '../Components/Search'
 import { useSelector } from 'react-redux'
+import { useGetProductsByCategoryQuery } from '../Services/shopServices'
 
 
 //Aquí se muestran los productos de la categorya que se selecciono anterior mente 
@@ -15,8 +16,12 @@ const ItemListCategory = ({
 }) => {
                       //parametros
   const {category} = route.params
+  // const productsSelected = useSelector (state => state.shopReducer.value.productsSelected)
+  const categorySelected = useSelector (state => state.shopReducer.value.categorySelected)
+  //llamar hook
+  const {data:productsSelected , isError, isLoading} = useGetProductsByCategoryQuery(categorySelected) //pasamso la categoria puede ser por parms o redux
 
-  const productsSelected= useSelector(state =>state.shopReducer.value.productsSelected)
+
 
   const [products, setProducts] = useState([])
   const [keyword, setKeyword] = useState("")
@@ -24,8 +29,11 @@ const ItemListCategory = ({
 
   useEffect(()=> {
     //Lógica de manejo de category
-    const productsFiltered = productsSelected.filter(product => product.title.toLocaleLowerCase().includes(keyword.toLowerCase()))
-    setProducts(productsFiltered)
+    if(productsSelected){
+      const productsFiltered = productsSelected.filter(product => product.title.toLocaleLowerCase().includes(keyword.toLowerCase()))
+      setProducts(productsFiltered)
+
+    }
 
   }, [productsSelected, keyword])
 

@@ -15,17 +15,17 @@ const CategoryItem = ({
 
   //seleccioa la categoria y la manda con el dispatch 
   const onSelectCategory= ()=>{
-    dispatch(setCategorySelected(item))
+    dispatch(setCategorySelected(item)) //setemos la categoria 
     navigation.navigate("ItemListCategory", {category: item})
   }
   
   return (
-    <View style = {{width: width, alignItems: 'center'}}> {/* poder deslizar la patalla */}
+    <View style = {{width: width, alignItems: 'center'}}> 
       <Pressable    
         //navegar a patalla correspondientes, agregamso el nombre que se definio en Navigator.jsx
         onPress={onSelectCategory}   //aparte de que navege indicar a que categoria va a navegar
       >
-        <Card>  {/*    //meter componente text dentro de la card que  se creo en Card.jsx*/}
+        <Card>  
           <Text style={styles.textCategory}>{item}</Text>
         </Card>
       </Pressable>

@@ -1,16 +1,25 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CartData from "../Data/cart.json"
 import CartItem from '../Components/CartItem'
 import { colors } from '../Global/Colors'
+import { useSelector } from 'react-redux'
+import { usePostCartMutation } from '../Services/shopServices'
 
 //simulamos los items del carrito 
 
 const Cart = () => { 
 
-  const total = CartData.reduce(( acumulador, curretItem)=>acumulador+= curretItem.price * curretItem.quantity,0) //FUCI CALlback de como va ir iterado 
+  const {items:CartData , total, updateAt, user}= useSelector(state=> state.cartReducer.value )  //Toda la Data del carrito
+  
+  // Mutation
+  const [triggerPostCart, result] = usePostCartMutation() //hook agregar ua ordenn 
 
-  console.log(total);
+  const onConfirm =()=>{
+    triggerPostCart({CartData, total, user , updateAt}) //geerar ua orde a traves de lo que est aen el carrito 
+  }
+
+
+  console.log(result);
   return (
 
 
@@ -29,7 +38,10 @@ const Cart = () => {
       />
 
     <View style={styles.totalContainer}>
-      <Pressable style={styles.boton}>
+      <Pressable style={styles.boton}
+        onPress={onConfirm}
+      
+      >
         <Text style={styles.texto}>
           Confirmar
         </Text>

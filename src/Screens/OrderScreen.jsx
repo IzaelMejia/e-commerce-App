@@ -7,9 +7,10 @@ import OrderItem from '../Components/OrderItem'
 
 //Mostrar las ordenes
 const OrderScreen = () => {
+
+  
   return (
     <View>        
-      {/* // Mostrar todlas las ordees con flatList */}
       <FlatList
         data={OrderData}
         keyExtractor={orderItem => orderItem.id}
@@ -24,8 +25,6 @@ const OrderScreen = () => {
         }}
 
       />
-
-        {/* LLammamos order item  */}
 
         <OrderItem
           order={OrderData[0]}

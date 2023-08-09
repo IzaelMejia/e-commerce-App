@@ -2,6 +2,9 @@ import { StyleSheet, View, Image, Text, Pressable } from 'react-native';
 import React from 'react';
 import { colors } from '../Global/Colors';
 import { AntDesign } from '@expo/vector-icons';
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../Features/User/userSlice';
 
 const Header = (
   // Recibimos propiedades
@@ -14,6 +17,9 @@ const Header = (
       if(route.name === "ItemListCategory") title = route.params.category
        if(route.name === "Detail") title = route.params.title
         else title= route.name
+
+  const dispatch = useDispatch();
+  const { email } = useSelector((state) => state.userReducer.value);
 
   return (
 
@@ -31,9 +37,11 @@ const Header = (
         <Text style={styles.texto}>{title}</Text>
       </View>
 
+
+      {/*  */}
       <View style={styles.backContainer}>
-        {
-          route.name !== "Home" ?  //Ternario para que no muestre el back cando estamos en home
+      {navigation.canGoBack() ? (
+            //Ternario para que no muestre el back cando estamos en home
             <Pressable
             style={styles.pressable}
             onPress={() => navigation.goBack()}
@@ -41,8 +49,17 @@ const Header = (
             <AntDesign name="back" size={26} color="black" />
             </Pressable>
         
-          : null
-        }
+        ) : null}
+
+      {/*  si hay email entonces muestra ese componente */}
+            {email ? (
+                <Pressable
+                    style={styles.signOut}
+                    onPress={() => dispatch(logOut())}
+                >
+                    <SimpleLineIcons name="logout" size={24} color="black" />
+                </Pressable>
+            ) : null}
       </View>
 
     </View>
@@ -83,4 +100,14 @@ const styles = StyleSheet.create({
     width: 100, // Ajusta el ancho deseado del logo
     height: 40, // Ajusta el alto deseado del logo
   },
+  pressable: {
+    position: "absolute",
+    right: 30,
+    top: "50%",
+},
+  signOut: {
+    position: "absolute",
+    left: 30,
+    top: "50%",
+},
 });

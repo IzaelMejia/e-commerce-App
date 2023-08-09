@@ -3,20 +3,29 @@ import { NavigationContainer } from '@react-navigation/native';
 import ShopStack from './ShopStack';
 import CartStack from './CartStack';
 import { colors } from '../Global/Colors';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign, Ionicons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import OrderStack from './OrderStack';
+import AuthStack from './AuthStack';
+import { useSelector } from 'react-redux';
+import MyProfileStack from './MyProfileStack';
 const Tab = createBottomTabNavigator();
 
 const Navigator = () => {
-  return (
+                                      //ruta del log
+  const {email} = useSelector(state =>state.userReducer.value)
 
-    <SafeAreaView style={styles.container}>   {/* o pitar la parte del celu de la parte de arriba*/}
+  return (
+    <SafeAreaView style={styles.container}>   
+    {/* o pitar la parte del celu de la parte de arriba*/}
       <NavigationContainer>
-      <Tab.Navigator
+        {/* si hay un email, navegamos a la aplicacion  */}
+        {
+          email ?
+       <Tab.Navigator
         screenOptions={
           {
             headerShown:false,        //quitar el header por deault
@@ -67,7 +76,30 @@ const Navigator = () => {
               }
             }}
           />
-        </Tab.Navigator>
+
+          <Tab.Screen
+            name="MyProfile"
+            component={MyProfileStack}
+            options={{
+            tabBarIcon: ({ focused }) => {
+              return (
+                <View style={styles.item}>
+                  <Ionicons
+                  name="person-circle-outline"
+                  size={24}
+                  color={focused ? colors.piel: "#fff"}
+                  />
+                </View>
+                      );
+            },
+            }}
+         />
+        </Tab.Navigator> 
+      // y SI NO MOSTRAR EL AuthStack
+      :
+      <AuthStack/>
+        }
+
         
       </NavigationContainer>
     </SafeAreaView>

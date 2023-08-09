@@ -16,13 +16,11 @@ const OrderItem = ({ order }) => {
     return (
         <View style={styles.card} onPress={() => {}}>
             <View style={styles.textContainer}>
-                {/* Texto que muestra la fecha de creación de la orden en formato localizado */}
                 <Text style={styles.text}>
-                    {new Date(order.createdAt).toLocaleString()}  {/*  mostrar la fecha de creación de la orden */}
+                    {new Date(order.createdAt).toLocaleString()}  
                 </Text>
                 <Text style={styles.text2}>${total}</Text>
             </View>
-            {/* Ícono de búsqueda representado por el componente "Feather" */}
             <Feather name="search" size={30} color="black" />
         </View>
     );
