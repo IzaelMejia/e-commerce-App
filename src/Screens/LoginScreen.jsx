@@ -53,7 +53,7 @@ const LoginScreen = ({navigation}) => {
                 email: resultSignIn.data.email, //email que envia de resputa 
                 idToken: resultSignIn.data.idToken,
                 localId: resultSignIn.data.localId,
-                profileImage:""
+                profileImage:"",
             }))
         }
     }, [resultSignIn])

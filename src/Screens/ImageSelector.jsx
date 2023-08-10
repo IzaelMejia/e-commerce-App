@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Image, View, StyleSheet, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import AddButton from "../Components/AddButton";
@@ -7,6 +6,7 @@ import * as MediaLibrary from "expo-media-library";
 import { usePostProfileImageMutation } from "../Services/shopServices";
 import { useDispatch, useSelector } from "react-redux";
 import { saveImage } from "../Features/User/userSlice";
+import { useState } from "react";
 
 // Definimos el componente ImageSelector que recibe 'navigation' como prop
 const ImageSelector = ({ navigation }) => {
@@ -46,34 +46,35 @@ const ImageSelector = ({ navigation }) => {
             //si la foto no se canselo , seteamos la img , uri img temporal dentro del dispositivo donde set el estado . 
             if (!result.canceled) {
                 setImage(result.assets[0].uri);
+            }else{
+                console.log("No se sube la Img");
             }
+            
         }
     };
 
     // Función para confirmar y guardar la imagen seleccionada
     const confirmImage = async () => {
-        dispatch (saveImage(image))
-        navigation.goBack()
-         try {
-            // Solicitar permiso para acceder al almacenamiento del dispositivo
+        try {
+            // Request device storage access permission
             const { status } = await MediaLibrary.requestPermissionsAsync();
             if (status === "granted") {
-                console.log("Solo válido en emuladores y dispositivos físicos");
-                // Guardar la imagen en la biblioteca de medios y crear un activo
+                console.log("Only valid on emulators and physical devices");
+                // Save image to media library and create an asset
                 const response = await MediaLibrary.createAssetAsync(image);
                 console.log(response.uri);
-                // Guardar el enlace de la imagen en la ubicación remota de profileImages
+                //Save image link on profileImages remote location
                 triggerSaveImage({
                     image: response.uri,
                     localId: localId,
                 });
-                // Establecer la imagen en el estado redux
+                // Set image on redux state
                 dispatch(saveImage(response.uri));
             }
         } catch (error) {
             console.log(error);
         }
-        navigation.goBack(); 
+        navigation.goBack();
     };
 
     // Devolvemos el contenido del componente

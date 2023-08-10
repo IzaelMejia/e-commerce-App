@@ -1,37 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
-    name: "User", 
-    initialState: { 
+    name: "User",
+    initialState: {
         value: {
-            email: "", 
-            idToken: "", 
+            email: "",
+            idToken: "",
             localId: "",
-            profileImage:"",
+            profileImage: "",
+            
         }
     },
     reducers: {
         setUser: (state, action) => {
-        state.value = action.payload
+            state.value = action.payload
         },
-         
         logOut: (state) => {
-            //cuando se deslogea
             state.value = {
                 email: "",
                 idToken: "",
                 localId: "",
                 profileImage: "",
+                
             }
         },
         saveImage: (state, action) => {
             state.value.profileImage = action.payload
+        },
+        setUserLocation: (state, action) => {
+            state.value.location = action.payload
         }
     }
-});
+})
 
-// Exporta las acciones creadas por el slice (setCategorySelected, setIdSelected)
-export const { setUser , logOut, saveImage } = userSlice.actions;
+export const {setUser, logOut, saveImage} = userSlice.actions
 
-// Exporta el reducer generado por el slice
-export default userSlice.reducer;
+export default userSlice.reducer

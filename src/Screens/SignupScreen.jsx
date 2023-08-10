@@ -26,7 +26,7 @@ const SignupScreen = ({ navigation }) => {
     const [triggerSignUp, result] = useSignUpMutation()
     console.log(result);
 
-    const dispatch =  useDispatch()
+    const dispatch = useDispatch()
     
     useEffect(()=> {
         if (result.isSuccess) {
@@ -35,7 +35,7 @@ const SignupScreen = ({ navigation }) => {
                     email: result.data.email, 
                     idToken: result.data.idToken,
                     localId: result.data.localId,
-                    profileImage:""
+                    profileImage:"",
                 })
             )
         }
