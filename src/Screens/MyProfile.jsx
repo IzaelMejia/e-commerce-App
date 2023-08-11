@@ -5,38 +5,40 @@ import * as ImagePicker from 'expo-image-picker'
 import { useSelector } from "react-redux";
 import { useGetProfileImageQuery } from "../Services/shopServices";
 
-const MyProfile = ({navigation}) => {
+const MyProfile = ({ navigation }) => {
     // const {profileImage, imageCamera} = useSelector(state => state.authReducer.value);
 
-    // Obtenemos el 'localId' y 'profileImage' del estado usando useSelector
-    const {localId, profileImage} = useSelector(state => state.userReducer.value)
+    const { localId, profileImage } = useSelector(state => state.userReducer.value)
 
-    const {data: image} = useGetProfileImageQuery(localId)  //guardamos en formato de objeto 
-    
-    const cameraImage = image?.image  //va estar la uri del dispositivo donde se encuentra la imagen
+    const { data: image } = useGetProfileImageQuery(localId)
 
-   // Función para navegar a la pantalla de selección de imagen
+    const cameraImage = image?.image
+
     const launchCamera = async () => {
         navigation.navigate('Image Selector')
     };
 
-    console.log(profileImage);
+    const launchLocation = async () => {
+        navigation.navigate('List Address')
+    }
+
     return (
         <View style={styles.container}>
-            {profileImage || cameraImage  ? (
+            {profileImage || cameraImage ? (
                 <Image
-                    source={{uri: profileImage || cameraImage}}
+                    source={{ uri: profileImage || cameraImage }}
                     style={styles.image}
                     resizeMode="cover"
                 />
             ) : (
                 <Image
-                    source={require("../Assets/Images/defaultProfile.png")}
+                    source={require("../assets/Images/defaultProfile.png")}
                     style={styles.image}
                     resizeMode="cover"
                 />
             )}
-            <AddButton onPress={launchCamera} title="Add profile picture" />
+            <AddButton onPress={launchCamera} title="Agrega una foto de perfil" />
+            <AddButton onPress={launchLocation} title="Mi dirección" />
         </View>
     );
 };

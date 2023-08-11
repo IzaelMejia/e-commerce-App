@@ -131,16 +131,16 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
-        fontFamily: "fira",
+        fontFamily: "Fira",
     },
     sub: {
         fontSize: 14,
-        fontFamily: "fira",
+        fontFamily: "Fira",
         color: "black",
     },
     subLink: {
         fontSize: 14,
-        fontFamily: "fira",
+        fontFamily: "Fira",
         color: colors.rojo,
     },
 });

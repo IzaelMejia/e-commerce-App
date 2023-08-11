@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
-        fontFamily: 'fira'
+        fontFamily: 'Fira'
     },
     sub: {
         fontSize: 15,
